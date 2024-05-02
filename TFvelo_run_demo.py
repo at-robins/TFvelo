@@ -30,6 +30,7 @@ def preprocess(args):
         "----------------------------------preprocess ",
         args.dataset_path,
         "---------------------------------------------",
+        flush=True,
     )
     adata = ad.read_h5ad(args.dataset_path)
 
@@ -97,7 +98,7 @@ def main(args):
         n_jobs = np.min([args.n_jobs, n_jobs_max])
     else:
         n_jobs = n_jobs_max
-    print("n_jobs:", n_jobs)
+    print("n_jobs:", n_jobs, flush=True)
     flag = TFv.tl.recover_dynamics(
         adata,
         n_jobs=n_jobs,
@@ -161,7 +162,9 @@ if __name__ == "__main__":
         "--max_iter", type=int, default=20, help="max number of iteration in EM"
     )
     parser.add_argument("--n_time_points", type=int, default=1000, help="use_raw")
-    parser.add_argument("--result_path", type=str, default="_demo", help="output directory")
+    parser.add_argument(
+        "--result_path", type=str, default="_demo", help="output directory"
+    )
     parser.add_argument("--use_raw", type=int, default=0, help="use_raw")
     parser.add_argument("--basis", type=str, default="umap", help="umap")
 
@@ -169,6 +172,6 @@ if __name__ == "__main__":
     print(
         "********************************************************************************************************"
     )
-    print(args)
+    print(args, flush=True)
     preprocess(args)
     main(args)

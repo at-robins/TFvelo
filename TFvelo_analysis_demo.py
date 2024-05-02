@@ -150,7 +150,7 @@ def main(args):
     adata = ad.read_h5ad(os.path.join(args.result_path, "rc.h5ad"))
     adata.var_names_make_unique()
     check_data_type(adata)
-    print(adata)
+    print(adata, flush=True)
 
     losses = adata.varm["loss"].copy()
     losses[np.isnan(losses)] = 1e6
@@ -229,5 +229,5 @@ if __name__ == "__main__":
 
     print("------------------------------------------------------------")
 
-    print(args)
+    print(args, flush=True)
     main(args)

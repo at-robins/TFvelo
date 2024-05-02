@@ -551,7 +551,7 @@ def recover_dynamics(
         unit="gene",
         as_array=False,
         backend=backend,
-        show_progress_bar=len(var_names) > 9,
+        show_progress_bar=False,
     )(
         adata=adata,
         use_raw=use_raw,
@@ -964,13 +964,13 @@ def _fit_recovery(
         tmp = str(list(var_names).index(gene)) + '/' + str(len(var_names))
         if dm.recoverable:
             #try:
-            print('Processing', tmp, dm.gene)
+            print('Processing', tmp, dm.gene, flush=True)
             dm.fit()
 
             ix = np.where(adata.var_names == gene)[0][0]
             idx.append(ix)
             dms.append(dm)
-            print(tmp, dm.gene, 'FINISHED with n_TFs:', dm.n_TFs)
+            print(tmp, dm.gene, 'FINISHED with n_TFs:', dm.n_TFs, flush=True)
             #except:
             #    dm.recoverable = False
             #    logg.warn(dm.gene, "not recoverable during optimization.")
