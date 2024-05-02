@@ -93,15 +93,10 @@ def main(args):
     print("--------------------------------")
     adata = ad.read_h5ad(os.path.join(args.result_path, "pp.h5ad"))
 
-    n_jobs_max = np.max([int(os.cpu_count() / 2), 1])
-    if args.n_jobs >= 1:
-        n_jobs = np.min([args.n_jobs, n_jobs_max])
-    else:
-        n_jobs = n_jobs_max
-    print("n_jobs:", n_jobs, flush=True)
+    print("n_jobs:", args.n_jobs, flush=True)
     flag = TFv.tl.recover_dynamics(
         adata,
-        n_jobs=n_jobs,
+        n_jobs=args.n_jobs,
         max_iter=args.max_iter,
         var_names=args.var_names,
         WX_method=args.WX_method,
@@ -131,7 +126,7 @@ if __name__ == "__main__":
         default="pancreas",
         help="the dataset input path",
     )
-    parser.add_argument("--n_jobs", type=int, default=28, help="number of cpus to use")
+    parser.add_argument("--n_jobs", type=int, default=1, help="number of cpus to use")
     parser.add_argument(
         "--var_names", type=str, default="all", help="all, highly_variable_genes"
     )
